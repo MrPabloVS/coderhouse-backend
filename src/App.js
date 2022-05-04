@@ -1,24 +1,52 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
+import 'dotenv/config'
+import Login from './components/login';
+import Welcome from './components/welcome';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { express } from 'express';
+import { userRouter } from "./routes/index"
+import db from './configs/mongoConfig';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import { Switch, Route } from 'react-router-dom'
 
 function App() {
+  const app = express()
+  const PORT = process.env.PORT || 5000
+
+  app.use(cookieParser())
+  app.use(express.json())
+  app.use(express.urlencoded({ extended: true }))
+  app.use(session({
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true}
+    }),
+
+    secret: "secreto",
+    resave: false,
+    saveUninitialized: false
+
+  }))
+
+  //app.use('/api', productRouter)
+  //app.use('/api', cartRouter)
+  app.use('/api', userRouter)
+
+  app.listen(PORT, () => console.log(`Escuchando puerto ${PORT}`))
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+      <Route exact path="/">
+       <Login/>
+      </Route>
+      <Route exact path="/welcome">
+        <Welcome/>
+      </Route>
+    </Switch>
   );
 }
 
