@@ -1,9 +1,10 @@
 import { Form, Button } from "react-bootstrap";
 
-function Login() {
+function Register() {
     return (
       <div>
-        <Form action="/user/login" method="GET">
+          <h1>Register:</h1>
+        <Form action="/user/register" method="GET">
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Username</Form.Label>
                 <Form.Control type="user" placeholder="Enter Username" />
@@ -17,15 +18,15 @@ function Login() {
             </Form.Group>
             
 
-        <Button variant="primary" type="submit" href="/welcome">
-            Login
+        <Button variant="primary" type="submit" href="/">
+            Resgister
         </Button>
-        <Button variant="primary"  href="/">
-            Go to Login
+        <Button variant="primary"  href="/register">
+            Go to Register
         </Button>
     </Form>
       </div>
     );
   }
 
-  export default Login
+  export default Register

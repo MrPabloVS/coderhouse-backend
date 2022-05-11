@@ -1,8 +1,7 @@
 //import logo from './logo.svg';
 import './App.css';
 import 'dotenv/config'
-import Login from './components/login';
-import Welcome from './components/welcome';
+import {Login, Welcome, Register} from "./components/index"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { express } from 'express';
 import { userRouter } from "./routes/index"
@@ -33,7 +32,7 @@ function App() {
 
   //app.use('/api', productRouter)
   //app.use('/api', cartRouter)
-  app.use('/api', userRouter)
+  app.use('/user', userRouter)
 
   app.listen(PORT, () => console.log(`Escuchando puerto ${PORT}`))
 
@@ -45,6 +44,9 @@ function App() {
       </Route>
       <Route exact path="/welcome">
         <Welcome/>
+      </Route>
+      <Route exact path="/register">
+        <Register/>
       </Route>
     </Switch>
   );
