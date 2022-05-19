@@ -1,61 +1,69 @@
-import { Router } from "express"
-import users from "../schemas/users"
-import jwt from "jsonwebtoken"
-import bcrypt from "bcrypt"
+import express from 'express'
+import { genAdminToken, verifyToken} from '../controllers/index.js'
 
-const PRIVATE_KEY = "myprivatekey"
+export const userRouter = express.Router()
 
-function generateToken(user) {
-    const token = jwt.sign({ data: user }, PRIVATE_KEY, { expiresIn: "24h"})
-    return token
-}
+userRouter.get('/admin', genAdminToken)
+userRouter.post('/admin', verifyToken)
 
-const router = Router()
+// import { Router } from "express"
+// import users from "../schemas/users"
+// import jwt from "jsonwebtoken"
+// import bcrypt from "bcrypt"
 
-router.get("/login", (req, res) => {
-    const { username, admin } = req.query
-    let {password} = req.query 
-    password = bcrypt.hash(password, 10)
+// const PRIVATE_KEY = "myprivatekey"
 
-    const verificado = users.find({username: username, password: password})
+// function generateToken(user) {
+//     const token = jwt.sign({ data: user }, PRIVATE_KEY, { expiresIn: "24h"})
+//     return token
+// }
 
-    if (!verificado) {
-        return res.send("Incorrect username or password")
-    }
+// const router = Router()
 
-    req.session.user = username
-    req.session.admin = admin
-    res.send(`welcome ${username}`)
+// router.get("/login", (req, res) => {
+//     const { username, admin } = req.query
+//     let {password} = req.query 
+//     password = bcrypt.hash(password, 10)
 
-})
+//     const verificado = users.find({username: username, password: password})
 
-router.get("/logout", (req, res) => {
-    req.session.destroy(err => {
-        if (err){
-            return res.json({ status: "Logout Error", body: err})
-        }
-        res.send("Logged out")
-    })
-})
+//     if (!verificado) {
+//         return res.send("Incorrect username or password")
+//     }
 
-router.post("/register", (req, res) => {
+//     req.session.user = username
+//     req.session.admin = admin
+//     res.send(`welcome ${username}`)
 
-    const { username } = req.query
-    let {password} = req.query 
-    password = bcrypt.hash(password, 10)
+// })
 
-    const yaExiste = users.find(user => user.username == username)
-        if (yaExiste) {
-            return res.json({ error: "Nombre de usuario en uso"})
-        }
+// router.get("/logout", (req, res) => {
+//     req.session.destroy(err => {
+//         if (err){
+//             return res.json({ status: "Logout Error", body: err})
+//         }
+//         res.send("Logged out")
+//     })
+// })
 
-    const user = {username, password}
-    users.push(user)
+// router.post("/register", (req, res) => {
 
-    const accessToken = generateToken(user)
+//     const { username } = req.query
+//     let {password} = req.query 
+//     password = bcrypt.hash(password, 10)
 
-    res.json({ accessToken })
+//     const yaExiste = users.find(user => user.username == username)
+//         if (yaExiste) {
+//             return res.json({ error: "Nombre de usuario en uso"})
+//         }
 
-})
+//     const user = {username, password}
+//     users.push(user)
 
-export const userRouter = router
+//     const accessToken = generateToken(user)
+
+//     res.json({ accessToken })
+
+// })
+
+// export const userRouter = router
