@@ -11,37 +11,40 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import { Switch, Route } from 'react-router-dom'
 import parseArgs from "minimist"
+import Server from "./server"
 
 function App() {
-  const app = express()
+  // const app = express()
 
-  const args = parseArgs(process.argv.slice(2))
-  const PORT = args || 8080
+  // const args = parseArgs(process.argv.slice(2))
+  // const PORT = args || 8080
 
-  app.use(cookieParser())
-  app.use(express.json())
-  app.use(express.urlencoded({ extended: true }))
-  app.use(session({
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
-      mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true}
-    }),
+  // app.use(cookieParser())
+  // app.use(express.json())
+  // app.use(express.urlencoded({ extended: true }))
+  // app.use(session({
+  //   store: MongoStore.create({
+  //     mongoUrl: process.env.MONGO_URI,
+  //     mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true}
+  //   }),
 
-    secret: "secreto",
-    resave: false,
-    saveUninitialized: false
+  //   secret: "secreto",
+  //   resave: false,
+  //   saveUninitialized: false
 
-  }))
+  // }))
 
-  //app.use('/api', productRouter)
-  //app.use('/api', cartRouter)
-  app.use('/user', userRouter)
-  app.use('/info', infoRouter)
+  // //app.use('/api', productRouter)
+  // //app.use('/api', cartRouter)
+  // app.use('/user', userRouter)
+  // app.use('/info', infoRouter)
 
-  app.listen(PORT, () => console.log(`Escuchando puerto ${PORT}`))
+  // app.listen(PORT, () => console.log(`Escuchando puerto ${PORT}`))
 
 
   return (
+    <div>
+      <Server/>
     <Switch>
       <Route exact path="/">
        <Login/>
@@ -53,6 +56,7 @@ function App() {
         <Register/>
       </Route>
     </Switch>
+    </div>
   );
 }
 
