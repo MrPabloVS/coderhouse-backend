@@ -1,4 +1,7 @@
 import jwt from 'jsonwebtoken'
+import log4js  from 'log4js'
+
+const logger = log4js.getLogger("custom")
 
 export const genAdminToken = (req, res, next) => {
   try {
@@ -9,6 +12,7 @@ export const genAdminToken = (req, res, next) => {
       admin: admin,
       timestamp: new Date().toISOString()
     }, process.env.API_SECRET, { expiresIn: '1h' })
+    logger.info("/user/admin GET")
     res.send({ adminToken })
   } catch (error) {
     error.status = 500
@@ -25,6 +29,8 @@ export const verifyToken = (req, res, next) => {
           error.status = 401
           throw error
         }
+
+        logger.info("/user/admin POST")
         req.user = decode
         res.send({ user: req.user })
       })

@@ -3,15 +3,15 @@ import './App.css';
 import 'dotenv/config'
 import {Login, Welcome, Register} from "./components/index"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { express } from 'express';
-import { userRouter, infoRouter } from "./routes/index"
-import db from './configs/mongoConfig';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
 import { Switch, Route } from 'react-router-dom'
-import parseArgs from "minimist"
-import Server from "./server"
+
+// import parseArgs from "minimist"
+// import { express } from 'express';
+// import { userRouter, infoRouter } from "./server/routes/index"
+// import db from './server/configs/mongoConfig';
+// import cookieParser from 'cookie-parser';
+// import session from 'express-session';
+// import MongoStore from 'connect-mongo';
 
 function App() {
   // const app = express()
@@ -43,8 +43,8 @@ function App() {
 
 
   return (
-    <div>
-      <Server/>
+    
+      
     <Switch>
       <Route exact path="/">
        <Login/>
@@ -56,7 +56,7 @@ function App() {
         <Register/>
       </Route>
     </Switch>
-    </div>
+    
   );
 }
 
