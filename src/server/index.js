@@ -9,6 +9,7 @@ import compression from "compression"
 import  log4js  from "log4js";
 import cluster from "cluster"
 import { cpus } from "os"
+import path from "path"
 
 log4js.configure({
   appenders: {
@@ -31,7 +32,7 @@ const logger = log4js.getLogger("custom")
 
 
   const args = parseArgs(process.argv.slice(2))
-  const PORT = args || 8080
+  const PORT = process.env.PORT || 5000
   const modoCluster = process.argv[3] === "CLUSTER"
 
   if (modoCluster && cluster.isPrimary) {
@@ -51,7 +52,10 @@ const logger = log4js.getLogger("custom")
     })
   } else {
     const app = express()
-    
+
+    if (process.env.NODE_ENV === "production") {
+      app.use(express.static())
+    }
 
     app.use(compression())
     app.use(cookieParser())

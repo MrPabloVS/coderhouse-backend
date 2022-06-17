@@ -3,7 +3,7 @@ import './App.css';
 import 'dotenv/config'
 import {Login, Welcome, Register} from "./components/index"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Switch, Route } from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
 // import parseArgs from "minimist"
 // import { express } from 'express';
