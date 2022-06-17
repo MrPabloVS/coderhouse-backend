@@ -32,7 +32,7 @@ const logger = log4js.getLogger("custom")
 
 
   const args = parseArgs(process.argv.slice(2))
-  const PORT = process.env.PORT || 5000
+  const PORT = process.env.REACT_APP_PORT || 5000
   const modoCluster = process.argv[3] === "CLUSTER"
 
   if (modoCluster && cluster.isPrimary) {
