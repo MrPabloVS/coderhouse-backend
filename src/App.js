@@ -1,6 +1,6 @@
 //import logo from './logo.svg';
 import './App.css';
-import 'dotenv/config'
+//import 'dotenv/config'
 import {Login, Welcome, Register} from "./components/index"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
